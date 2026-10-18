@@ -51,7 +51,7 @@ jobs:
       - name: Package
         run: |
           mkdir -p work
-          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/w/.home -v "$PWD:/w" -w /w \
+          docker run --rm -v "$PWD:/w" -w /w \
             registry.videolan.org/vlc-debian-android:20260611225331 bash -c '
               ./build-in-image.sh sources work &&
               mkdir -p work/libvlcjni/libvlc/jni/libs &&
