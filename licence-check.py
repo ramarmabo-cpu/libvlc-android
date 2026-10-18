@@ -5,7 +5,7 @@ import zipfile
 
 GPL_MARKERS = {
     b"the GNU General Public License, version 2 or later": "a GPL-2+ VLC module",
-    b"x264 - core": "x264 (GPL)",
+    b"H.264/MPEG-4 AVC codec - Copy": "x264 (GPL)",
     b"pp_postprocess": "libpostproc (GPL)",
     b"dvdnav_open": "libdvdnav (GPL)",
     b"DVDOpen": "libdvdread (GPL)",
