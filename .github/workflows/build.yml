@@ -3,9 +3,14 @@ name: build
 on:
   push:
   workflow_dispatch:
+    inputs:
+      libs_run:
+        type: string
+        default: ''
 
 jobs:
   abi:
+    if: ${{ !inputs.libs_run }}
     strategy:
       matrix:
         include:
@@ -41,6 +46,7 @@ jobs:
 
   aar:
     needs: abi
+    if: ${{ !cancelled() && (needs.abi.result == 'success' || (inputs.libs_run && needs.abi.result == 'skipped')) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
@@ -49,10 +55,12 @@ jobs:
         with:
           pattern: libs-*
           path: libs
+          run-id: ${{ inputs.libs_run || github.run_id }}
+          github-token: ${{ github.token }}
       - name: Package
         run: |
           mkdir -p work
-          docker run --rm -v "$PWD:/w" -w /w \
+          docker run --rm --user root -e HOME=/w/.home -v "$PWD:/w" -w /w \
             registry.videolan.org/vlc-debian-android:20260611225331 bash -c '
               ./build-in-image.sh sources work &&
               mkdir -p work/libvlcjni/libvlc/jni/libs &&
