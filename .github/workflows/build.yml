@@ -25,12 +25,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
         with:
-          path: work/libvlcjni/vlc/contrib/tarballs
+          path: tarballs
           key: tarballs-${{ matrix.abi }}-${{ hashFiles('*.patch', 'build-in-image.sh') }}
           restore-keys: tarballs-${{ matrix.abi }}-
       - name: Build
         run: |
-          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/w/.home -v "$PWD:/w" -w /w ${{ matrix.image }} \
+          mkdir -p tarballs
+          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/w/.home -e VLC_TARBALLS=/w/tarballs -v "$PWD:/w" -w /w ${{ matrix.image }} \
             bash -c './build-in-image.sh sources work && ./build-in-image.sh abi work ${{ matrix.abi }}'
       - uses: actions/upload-artifact@v4
         with:

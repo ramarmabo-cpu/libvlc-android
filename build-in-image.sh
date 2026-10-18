@@ -14,7 +14,7 @@ apply_once() {
 
 case $stage in
   sources)
-    [[ -d $dir/libvlcjni ]] || git clone -q -b libvlcjni-3.x "$LIBVLCJNI_REPO" "$dir/libvlcjni"
+    [[ -d $dir/libvlcjni/.git ]] || git clone -q -b libvlcjni-3.x "$LIBVLCJNI_REPO" "$dir/libvlcjni"
     cd "$dir/libvlcjni"
     git checkout -q "$LIBVLCJNI_COMMIT"
     apply_once "$here/libvlcjni-lgpl.patch"
