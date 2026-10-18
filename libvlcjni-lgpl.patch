@@ -1,0 +1,68 @@
+diff --git a/buildsystem/compile-libvlc.sh b/buildsystem/compile-libvlc.sh
+index b67c1e6..b54f326 100755
+--- a/buildsystem/compile-libvlc.sh
++++ b/buildsystem/compile-libvlc.sh
+@@ -293,10 +293,10 @@ VLC_CONTRIB_ARGS="\
+     --disable-dca \
+     --disable-goom \
+     --disable-chromaprint \
+-    --enable-lua \
++    --disable-lua \
+     --disable-sdl \
+     --disable-SDL_image \
+-    --enable-zvbi \
++    --disable-zvbi \
+     --disable-kate \
+     --disable-caca \
+     --disable-mpcdec \
+@@ -351,7 +351,7 @@ VLC_CONFIGURE_ARGS="\
+     --disable-update-check \
+     --disable-vlm \
+     --disable-dbus \
+-    --enable-lua \
++    --disable-lua \
+     --disable-vcd \
+     --disable-v4l2 \
+     --enable-bluray \
+@@ -367,7 +367,7 @@ VLC_CONFIGURE_ARGS="\
+     --enable-mpg123 \
+     --disable-dca \
+     --disable-sdl-image \
+-    --enable-zvbi \
++    --disable-zvbi \
+     --disable-fluidsynth \
+     --enable-fluidlite \
+     --disable-jack \
+@@ -449,6 +449,18 @@ VLC_MODULE_BLACKLIST="
+     aout_file
+     yuv
+     .dummy
++    access_realrtsp
++    vod_rtsp
++    dolby_surround_decoder
++    headphone_channel_mixer
++    mono
++    rotate
++    stream_out_rtp
++    stream_out_cycle
++    file_logger
++    syslog
++    lua
++    dummy
+ "
+ 
+ ###########################
+diff --git a/libvlc/build.gradle b/libvlc/build.gradle
+index d3eb53a..4b318f2 100644
+--- a/libvlc/build.gradle
++++ b/libvlc/build.gradle
+@@ -28,9 +28,6 @@ android {
+         tasks.whenTaskAdded { task ->
+             if (task.name.startsWith('merge')) {
+                 task.dependsOn hrtfsCopy
+-                task.dependsOn luaPlaylistCopy
+-                task.dependsOn luaMetaCopy
+-                task.dependsOn luaModuleCopy
+             }
+         }
+ 

@@ -1,0 +1,66 @@
+name: build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  abi:
+    strategy:
+      matrix:
+        include:
+          - abi: arm
+            dir: armeabi-v7a
+            image: registry.videolan.org/vlc-debian-android-3.0:20260701183656
+          - abi: arm64
+            dir: arm64-v8a
+            image: registry.videolan.org/vlc-debian-android:20260611225331
+    runs-on: ubuntu-24.04
+    timeout-minutes: 355
+    steps:
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache /usr/local/share/boost /usr/share/swift
+          df -h /
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          path: work/libvlcjni/vlc/contrib/tarballs
+          key: tarballs-${{ matrix.abi }}-${{ hashFiles('*.patch', 'build-in-image.sh') }}
+          restore-keys: tarballs-${{ matrix.abi }}-
+      - name: Build
+        run: |
+          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/w/.home -v "$PWD:/w" -w /w ${{ matrix.image }} \
+            bash -c './build-in-image.sh sources work && ./build-in-image.sh abi work ${{ matrix.abi }}'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: libs-${{ matrix.dir }}
+          path: work/libvlcjni/libvlc/jni/libs/${{ matrix.dir }}
+          retention-days: 30
+
+  aar:
+    needs: abi
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: libs-*
+          path: libs
+      - name: Package
+        run: |
+          mkdir -p work
+          docker run --rm --user "$(id -u):$(id -g)" -e HOME=/w/.home -v "$PWD:/w" -w /w \
+            registry.videolan.org/vlc-debian-android:20260611225331 bash -c '
+              ./build-in-image.sh sources work &&
+              mkdir -p work/libvlcjni/libvlc/jni/libs &&
+              for d in libs/libs-*; do cp -r "$d" "work/libvlcjni/libvlc/jni/libs/${d#libs/libs-}"; done &&
+              ./build-in-image.sh aar work'
+          python3 licence-check.py work/libvlc-lgpl.aar
+          sha256sum work/libvlc-lgpl.aar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: libvlc-lgpl-aar
+          path: work/libvlc-lgpl.aar
+          retention-days: 90

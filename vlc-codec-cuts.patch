@@ -1,0 +1,19 @@
+diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
+index e4b5595b59..3ed944e17b 100644
+--- a/contrib/src/ffmpeg/rules.mak
++++ b/contrib/src/ffmpeg/rules.mak
+@@ -42,7 +42,13 @@ FFMPEGCONF = --prefix="$(PREFIX)" --enable-static --disable-shared \
+ 	--disable-bsfs \
+ 	--disable-bzlib \
+ 	--disable-libvpx \
+-	--enable-bsf=vp9_superframe
++	--enable-bsf=vp9_superframe \
++	--disable-decoder=hevc \
++	--disable-decoder=truehd \
++	--disable-decoder=mlp \
++	--disable-decoder=aac \
++	--disable-decoder=aac_fixed \
++	--disable-decoder=aac_latm
+ 
+ ifdef USE_FFMPEG
+ FFMPEGCONF += \
