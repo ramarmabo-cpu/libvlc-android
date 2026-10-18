@@ -20,7 +20,7 @@ case $stage in
     apply_once "$here/libvlcjni-lgpl.patch"
     [[ -d vlc ]] || GIT_AUTHOR_NAME=build GIT_AUTHOR_EMAIL=build@localhost \
       GIT_COMMITTER_NAME=build GIT_COMMITTER_EMAIL=build@localhost ./buildsystem/get-vlc.sh
-    (cd vlc && apply_once "$here/vlc-codec-cuts.patch")
+    (cd vlc && apply_once "$here/vlc-codec-cuts.patch" && apply_once "$here/vlc-decoders.patch")
     ;;
   abi)
     cd "$dir/libvlcjni"
