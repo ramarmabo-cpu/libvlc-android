@@ -1,8 +1,8 @@
 diff --git a/buildsystem/compile-libvlc.sh b/buildsystem/compile-libvlc.sh
-index b67c1e6..b54f326 100755
+index b67c1e6..613da3d 100755
 --- a/buildsystem/compile-libvlc.sh
 +++ b/buildsystem/compile-libvlc.sh
-@@ -293,10 +293,10 @@ VLC_CONTRIB_ARGS="\
+@@ -293,14 +293,14 @@ VLC_CONTRIB_ARGS="\
      --disable-dca \
      --disable-goom \
      --disable-chromaprint \
@@ -15,7 +15,44 @@ index b67c1e6..b54f326 100755
      --disable-kate \
      --disable-caca \
      --disable-mpcdec \
-@@ -351,7 +351,7 @@ VLC_CONFIGURE_ARGS="\
+-    --enable-upnp \
++    --disable-upnp \
+     --enable-gme \
+     --disable-tremor \
+     --enable-vorbis \
+@@ -312,13 +312,13 @@ VLC_CONTRIB_ARGS="\
+     --disable-aribb24 \
+     --disable-aribb25 \
+     --enable-mpg123 \
+-    --enable-libdsm \
+-    --enable-smb2 \
++    --disable-libdsm \
++    --disable-smb2 \
+     --enable-libarchive \
+     --disable-libmpeg2 \
+     --enable-soxr \
+-    --enable-nfs \
+-    --enable-microdns \
++    --disable-nfs \
++    --disable-microdns \
+     --enable-fluidlite \
+     --disable-mad \
+     --disable-vncclient \
+@@ -330,6 +330,13 @@ VLC_CONTRIB_ARGS="\
+     --enable-vpx \
+     --disable-x265 \
+     --disable-medialibrary \
++    --disable-sout \
++    --disable-librist \
++    --disable-shout \
++    --disable-twolame \
++    --disable-cddb \
++    --disable-ssh2 \
++    --disable-protobuf \
+ "
+ 
+ ###########################
+@@ -351,7 +358,7 @@ VLC_CONFIGURE_ARGS="\
      --disable-update-check \
      --disable-vlm \
      --disable-dbus \
@@ -24,7 +61,7 @@ index b67c1e6..b54f326 100755
      --disable-vcd \
      --disable-v4l2 \
      --enable-bluray \
-@@ -367,7 +367,7 @@ VLC_CONFIGURE_ARGS="\
+@@ -367,7 +374,7 @@ VLC_CONFIGURE_ARGS="\
      --enable-mpg123 \
      --disable-dca \
      --disable-sdl-image \
@@ -33,7 +70,16 @@ index b67c1e6..b54f326 100755
      --disable-fluidsynth \
      --enable-fluidlite \
      --disable-jack \
-@@ -449,6 +449,18 @@ VLC_MODULE_BLACKLIST="
+@@ -392,7 +399,7 @@ VLC_CONFIGURE_ARGS="\
+     --disable-faad \
+     --disable-vnc \
+     --enable-jpeg \
+-    --enable-smb2 \
++    --disable-smb2 \
+ "
+ 
+ ########################
+@@ -449,6 +456,18 @@ VLC_MODULE_BLACKLIST="
      aout_file
      yuv
      .dummy
