@@ -1,5 +1,5 @@
 diff --git a/buildsystem/compile-libvlc.sh b/buildsystem/compile-libvlc.sh
-index b67c1e6..613da3d 100755
+index b67c1e6..ec7e8a4 100755
 --- a/buildsystem/compile-libvlc.sh
 +++ b/buildsystem/compile-libvlc.sh
 @@ -293,14 +293,14 @@ VLC_CONTRIB_ARGS="\
@@ -38,11 +38,10 @@ index b67c1e6..613da3d 100755
      --enable-fluidlite \
      --disable-mad \
      --disable-vncclient \
-@@ -330,6 +330,13 @@ VLC_CONTRIB_ARGS="\
+@@ -330,6 +330,12 @@ VLC_CONTRIB_ARGS="\
      --enable-vpx \
      --disable-x265 \
      --disable-medialibrary \
-+    --disable-sout \
 +    --disable-librist \
 +    --disable-shout \
 +    --disable-twolame \
@@ -52,7 +51,7 @@ index b67c1e6..613da3d 100755
  "
  
  ###########################
-@@ -351,7 +358,7 @@ VLC_CONFIGURE_ARGS="\
+@@ -351,7 +357,7 @@ VLC_CONFIGURE_ARGS="\
      --disable-update-check \
      --disable-vlm \
      --disable-dbus \
@@ -61,7 +60,7 @@ index b67c1e6..613da3d 100755
      --disable-vcd \
      --disable-v4l2 \
      --enable-bluray \
-@@ -367,7 +374,7 @@ VLC_CONFIGURE_ARGS="\
+@@ -367,7 +373,7 @@ VLC_CONFIGURE_ARGS="\
      --enable-mpg123 \
      --disable-dca \
      --disable-sdl-image \
@@ -70,7 +69,7 @@ index b67c1e6..613da3d 100755
      --disable-fluidsynth \
      --enable-fluidlite \
      --disable-jack \
-@@ -392,7 +399,7 @@ VLC_CONFIGURE_ARGS="\
+@@ -392,7 +398,7 @@ VLC_CONFIGURE_ARGS="\
      --disable-faad \
      --disable-vnc \
      --enable-jpeg \
@@ -79,7 +78,7 @@ index b67c1e6..613da3d 100755
  "
  
  ########################
-@@ -449,6 +456,18 @@ VLC_MODULE_BLACKLIST="
+@@ -449,6 +455,18 @@ VLC_MODULE_BLACKLIST="
      aout_file
      yuv
      .dummy
